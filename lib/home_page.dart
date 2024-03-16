@@ -1,4 +1,6 @@
+import 'package:news_flutter_data_dummy/di.dart';
 import 'package:news_flutter_data_dummy/news_repo_impl.dart';
+import 'package:news_flutter_domain/NewsDI.dart';
 import 'package:news_flutter_domain/errors/base_error.dart';
 import 'package:news_flutter_domain/model/news_model.dart';
 import 'package:news_flutter_domain/repo/news_repo.dart';
@@ -59,8 +61,10 @@ class HomePageView extends StatelessWidget {
 /// To hold UI state, required controllers
 /// Calculations like validation, data filtration, sorting
 class HomePageViewModel{
-  late NewsRepo newsRepo = NewsRepoDummyImpl();
-  late GetNewsUseCase getNewsUseCase = GetNewsUseCase(newsRepo);
+
+  NewsDI newsDI = DummyNewsDI();
+  late GetNewsUseCase getNewsUseCase = newsDI.createGetNewsUseCase();
+
   HomePageViewModel(){
     getNewsList();
   }
