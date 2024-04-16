@@ -39,11 +39,11 @@ dependencies:
   news_flutter_domain:
     git:
       url: https://github.com/SaurabhS120/news_flutter_domain.git
-      ref: 1.0.2
+      ref: 1.0.3
   news_flutter_data_dummy:
     git:
       url: https://github.com/SaurabhS120/news_flutter_data_dummy.git
-      ref: 1.0.2
+      ref: 1.0.3
   either_dart: ^1.0.0
   rxdart: ^0.27.7
 
