@@ -52,3 +52,9 @@ dhttpd --path ./doc/api
 ![Screenshot 2024-03-11 101702](https://github.com/SaurabhS120/news_flutter/assets/70626113/7b770b92-2810-41cd-9bce-7adf74f0a222)
 5. Open http://localhost:8080/ url into your browser.
 ![Screenshot 2024-03-11 102136](https://github.com/SaurabhS120/news_flutter/assets/70626113/2d92e4e4-d205-4a5c-b91b-635ec2ee5fc5)
+
+# App Screenshot:
+<br>
+<img src="https://github.com/SaurabhS120/news_flutter_presentation/assets/70626113/fe8e3290-bfb7-4c6c-920e-e116b63e8d62" height=500/>
+
+
