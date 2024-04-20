@@ -42,7 +42,12 @@ class HomePageView extends StatelessWidget {
          itemBuilder: (BuildContext context,int index){
            return Padding(
              padding: const EdgeInsets.all(16.0),
-             child: Text(newsList.data?.left[index].title??''),
+             child: Column(
+               children: [
+                 Image.network(newsList.data?.left[index].imageUrl??''),
+                 Text(newsList.data?.left[index].title??''),
+               ],
+             ),
            );
          },
          separatorBuilder: (BuildContext context,int index){
