@@ -1,14 +1,14 @@
-import 'package:news_flutter_data_dummy/di.dart';
-import 'package:news_flutter_data_dummy/news_repo_impl.dart';
-import 'package:news_flutter_domain/NewsDI.dart';
-import 'package:news_flutter_domain/errors/base_error.dart';
-import 'package:news_flutter_domain/model/news_model.dart';
-import 'package:news_flutter_domain/repo/news_repo.dart';
-import 'package:news_flutter_domain/usecase/get_news_usecase.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:news_flutter/base_page/base_page.dart';
+import 'package:news_flutter_data_newsapi/di.dart';
+import 'package:news_flutter_domain/NewsDI.dart';
+import 'package:news_flutter_domain/errors/base_error.dart';
+import 'package:news_flutter_domain/model/news_model.dart';
+import 'package:news_flutter_domain/usecase/get_news_usecase.dart';
 import 'package:rxdart/rxdart.dart';
+
+import 'main.dart';
 class HomePage extends BasePage {
   HomePageViewModel model = HomePageViewModel();
   HomePage({super.key});
@@ -67,7 +67,7 @@ class HomePageView extends StatelessWidget {
 /// Calculations like validation, data filtration, sorting
 class HomePageViewModel{
 
-  NewsDI newsDI = DummyNewsDI();
+  NewsDI newsDI = NewsApiDI(apiKey: dotEnv.env['NEWS_API_KEY']??'');
   late GetNewsUseCase getNewsUseCase = newsDI.createGetNewsUseCase();
 
   HomePageViewModel(){

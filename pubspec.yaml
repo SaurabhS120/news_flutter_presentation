@@ -44,8 +44,13 @@ dependencies:
     git:
       url: https://github.com/SaurabhS120/news_flutter_data_dummy.git
       ref: 1.0.4
+  news_flutter_data_newsapi:
+    git:
+      url: https://github.com/SaurabhS120/news_flutter_data_newsapi.git
+      ref: 1.0.4
   either_dart: ^1.0.0
   rxdart: ^0.27.7
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +75,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+     - .env # Environment file which contains secrets
+            # newsApiKey - Api key for news
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

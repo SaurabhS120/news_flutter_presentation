@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:news_flutter/home_page.dart';
-
-void main() {
+late DotEnv dotEnv;
+void main() async{
+  dotEnv = DotEnv();
+  await dotEnv.load();
   runApp(const MyApp());
 }
 
