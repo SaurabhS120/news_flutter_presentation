@@ -47,7 +47,7 @@ dependencies:
   news_flutter_data_newsapi:
     git:
       url: https://github.com/SaurabhS120/news_flutter_data_newsapi.git
-      ref: 1.0.4
+      ref: 1.0.5
   either_dart: ^1.0.0
   rxdart: ^0.27.7
   flutter_dotenv: ^5.1.0

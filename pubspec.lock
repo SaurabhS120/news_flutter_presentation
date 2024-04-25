@@ -192,8 +192,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.4"
-      resolved-ref: eab5b6156df23fdbe559a156928d88a79ad21a2a
+      ref: master
+      resolved-ref: d7959efa2b5291c9bf57e561a1668ce811e9dd2b
       url: "https://github.com/SaurabhS120/news_flutter_data_newsapi.git"
     source: git
     version: "1.0.0+1"
