@@ -13,11 +13,11 @@ abstract class BasePageState<T extends BasePage> extends State<T> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: buildBody(),
+      body: buildBody(context),
     );
   }
 
   PreferredSizeWidget buildAppBar();
 
-  Widget buildBody();
+  Widget buildBody(BuildContext context);
 }

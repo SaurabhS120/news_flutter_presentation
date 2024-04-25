@@ -6,11 +6,11 @@ import 'package:news_flutter_domain/NewsDI.dart';
 import 'package:news_flutter_domain/errors/base_error.dart';
 import 'package:news_flutter_domain/model/news_model.dart';
 import 'package:news_flutter_domain/usecase/get_news_usecase.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'main.dart';
 class HomePage extends BasePage {
-  HomePageViewModel model = HomePageViewModel();
   HomePage({super.key});
   @override
   HomePageState createState() => HomePageState();
@@ -25,8 +25,8 @@ class HomePageState extends BasePageState<HomePage> {
   }
 
   @override
-  Widget buildBody() {
-    return HomePageView(model: widget.model,);
+  Widget buildBody(BuildContext context) {
+    return Consumer<HomePageViewModel>(builder: (BuildContext context,model,child)=>HomePageView(model: model));
   }
 }
 class HomePageView extends StatelessWidget {

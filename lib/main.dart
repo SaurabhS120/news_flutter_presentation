@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:news_flutter/home_page.dart';
+import 'package:provider/provider.dart';
 late DotEnv dotEnv;
 void main() async{
   dotEnv = DotEnv();
@@ -28,7 +29,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: Provider(
+          create: (BuildContext context) {
+            return HomePageViewModel();
+          },
+          child: HomePage()
+      ),
     );
   }
 }
