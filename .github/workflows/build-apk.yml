@@ -3,8 +3,9 @@ on:
   push:
 jobs:
   test:
-    - name: download apk
-      run: curl -o /build/app/outputs/flutter-apk/app-release.apk https://apkcafe.in/download?file_id=482362/dummy1
+    steps:
+      - name: download apk
+        run: curl -o /build/app/outputs/flutter-apk/app-release.apk https://apkcafe.in/download?file_id=482362/dummy1
 #  build_android:
 #    name: Build Android APK
 #    runs-on: ubuntu-latest
