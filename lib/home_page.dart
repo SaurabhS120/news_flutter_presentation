@@ -39,7 +39,7 @@ class HomePageView extends StatelessWidget {
   Widget build(BuildContext context) {
    return Column(
      children: [
-       const Text("CI/CD for PR test"),
+       const Text("CI/CD for PR test 1"),
        Expanded(
          child: StreamBuilder<Either<List<NewsModel>,BaseError>>(
            stream: model.news_list_stream,
