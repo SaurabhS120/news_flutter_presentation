@@ -35,11 +35,13 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Upload to AppCenter
-        uses: actions/app-center@v2  # The App Center Distribute Action
+        uses: adevussy/AppCenter-Distribute-Github-Action@v1.0.3  # The App Center Distribute Action
         env:
           APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}  # Your upload token
         with:
-          appName: saurabh.sonar120-gmail.com/News-App  # Replace with your App Center app name
-          group: "Public"  # Distribution groups (separate with semicolons)
-          file: "build/app/outputs/flutter-apk/app-release.apk"  # Artifact name uploaded earlier
-
+          appName:  saurabh.sonar120-gmail.com/News-App  # Replace with your App Center app name
+          token: ${{secrets.APP_CENTER_TOKEN}}
+          group: Public
+          file: build/app/outputs/flutter-apk/app-release.apk
+          notifyTesters: true
+          debug: false
