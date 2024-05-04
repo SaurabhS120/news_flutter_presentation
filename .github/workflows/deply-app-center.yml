@@ -9,12 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true # && github.event.pull_request.base.ref == 'master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
-      - name: Get Last commit tag
-        run: PREV_COMMIT_ID=$(git rev-parse HEAD~1)
-      - uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts-${{ PREV_COMMIT_ID }}  # Include merge timestamp
-          path: app-release.apk
+      - uses: build-apk.yml
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -29,4 +24,4 @@ jobs:
         run: npm install -g appcenter-cli
 
       - name: Upload APK to App Center
-        run: appcenter distribute release -f app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
+        run: appcenter distribute release -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
