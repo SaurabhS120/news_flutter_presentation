@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: build-artifacts-${{ github.event.number }}  # Include merge timestamp
+          name: build-artifacts-${{ github.sha }}  # Include merge timestamp
           path: app-release.apk
       - name: Setup Node.js
         uses: actions/setup-node@v2
