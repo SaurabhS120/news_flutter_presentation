@@ -37,4 +37,4 @@ jobs:
       - name: Upload to AppCenter # The App Center Distribute Action
         run: |
           chmod +x upload-to-app-center.sh
-          ./upload-to-app-center.sh
+          ./upload-to-app-center.sh ${{ secrets.APP_CENTER_TOKEN }}
