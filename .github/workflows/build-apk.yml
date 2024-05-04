@@ -34,7 +34,13 @@ jobs:
           name: android-build
           path: build/app/outputs/flutter-apk/app-release.apk
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install app center
+        run: npm install -g appcenter-cli
+
       - name: Upload APK to App Center
-        run: |
-          npm install -g appcenter-cli
-          appcenter distribute release -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token $APPCENTER_ACCESS_TOKEN
+        run: appcenter distribute release -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token $APPCENTER_ACCESS_TOKEN
