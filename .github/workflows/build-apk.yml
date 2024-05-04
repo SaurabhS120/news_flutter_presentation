@@ -44,6 +44,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.ref == 'refs/heads/master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
+      - name: test
+        run: |
+          echo github.event.pull_request.merged == true : ${{github.event.pull_request.merged == true}}
+          echo github.event.pull_request.base.ref : ${{github.event.pull_request.base.ref}}
+          echo github.event.ref : ${{github.event.ref}}
 #      - name: Setup Node.js
 #        uses: actions/setup-node@v2
 #        with:
