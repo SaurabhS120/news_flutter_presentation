@@ -37,7 +37,7 @@ jobs:
       - name: APK upload
         uses: actions/upload-artifact@v4
         with:
-          name:  build-artifacts-${{ github.run_id }}.apk  # Include PR number in name
+          name:  build-artifacts.apk  # Include PR number in name
           path: build/app/outputs/flutter-apk/app-release.apk
   deploy-app-center:
     name: Deply on App Center
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: build-artifacts-${{ github.run_id }}.apk
+          name: build-artifacts.apk
           path: build/app/outputs/flutter-apk/app-release.apk
       - name: Permission to apk
         run: chmod 777 build/app/outputs/flutter-apk/app-release.apk
@@ -65,4 +65,4 @@ jobs:
         run: npm install -g appcenter-cli
 
       - name: Upload APK to App Center
-        run: appcenter distribute release -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
+        run: appcenter distribute release -f ./build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
