@@ -36,8 +36,9 @@ jobs:
 
       - name: Upload to AppCenter # The App Center Distribute Action
         env:
-          OWNER_NAME="saurabh.sonar120-gmail.com"
-          APP_NAME="News-App"
-          API_TOKEN=${{ secrets.APP_CENTER_TOKEN }}
-          APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
-       run: sh upload-to-app-center.sh
+          APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}  # Your upload token
+        with:
+          appName: saurabh.sonar120-gmail.com/News-App  # Replace with your App Center app name
+          group: "Public"  # Distribution groups (separate with semicolons)
+          file: "build/app/outputs/flutter-apk/app-release.apk"  # Artifact name uploaded earlier
+
