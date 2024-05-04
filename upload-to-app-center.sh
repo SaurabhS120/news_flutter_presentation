@@ -4,7 +4,7 @@ set -e
 DISTRIBUTION_GROUP="Public"
 OWNER_NAME="saurabh.sonar120-gmail.com"
 APP_NAME="News-App"
-API_TOKEN=${{ secrets.APP_CENTER_TOKEN }}
+API_TOKEN="${{ secrets.APP_CENTER_TOKEN }}"
 RELEASE_FILE_LOCATION="build/app/outputs/flutter-apk/app-release.apk"
 FILE_NAME="app-release.apk"
 
