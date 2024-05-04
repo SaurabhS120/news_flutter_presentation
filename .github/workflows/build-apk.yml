@@ -63,4 +63,4 @@ jobs:
         run: npm install -g appcenter-cli
 
       - name: Upload APK to App Center
-        run: appcenter distribute release -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
+        run: appcenter distribute release -f ./build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
