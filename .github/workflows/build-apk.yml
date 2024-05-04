@@ -42,6 +42,7 @@ jobs:
   deploy-app-center:
     name: Deply on App Center
     runs-on: ubuntu-latest
+    needs: build_android
     if: github.event.ref == 'refs/heads/master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
       - name: Setup Node.js
