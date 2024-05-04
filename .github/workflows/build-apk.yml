@@ -36,8 +36,8 @@ jobs:
 
       - name: Upload to AppCenter
         uses: actions/app-center@v2  # The App Center Distribute Action
-          env:
-            APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}  # Your upload token
+        env:
+          APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}  # Your upload token
         with:
           appName: saurabh.sonar120-gmail.com/News-App  # Replace with your App Center app name
           group: "Public"  # Distribution groups (separate with semicolons)
