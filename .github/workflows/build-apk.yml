@@ -44,4 +44,4 @@ jobs:
           APPCENTER_ACCESS_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
 
       - name: Upload APK to App Center
-        run: appcenter distribute rele  ase -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120@gmail.com/News-App --token $APPCENTER_ACCESS_TOKEN
+        run: appcenter distribute release -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120@gmail.com/News-App --token $APPCENTER_ACCESS_TOKEN
