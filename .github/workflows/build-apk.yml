@@ -1,6 +1,7 @@
 name: Build Android APK
 on:
   pull_request:  # Trigger on pull request events
+    type: [ open ]
 jobs:
   build_android:
     name: Build Android APK
@@ -32,26 +33,5 @@ jobs:
       - name: APK upload
         uses: actions/upload-artifact@v4
         with:
-          name: android-build
+          name:  build-artifacts-${{ github.event.number }}  # Include PR number in name
           path: build/app/outputs/flutter-apk/app-release.apk
-  deploy-app-center:
-    name: Deply on App Center
-    runs-on: ubuntu-latest
-    needs: build_android
-    if: github.event.pull_request.merged == true # && github.event.pull_request.base.ref == 'master'  # Only run for PRs targeting master  # Only run this job on PR merge
-    steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 'v20.12.2'
-
-      - name: Update npm packages
-        run: |
-          npm install formidable@latest
-          npm install superagent@latest
-
-      - name: Install app center
-        run: npm install -g appcenter-cli
-
-      - name: Upload APK to App Center
-        run: appcenter distribute release -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
