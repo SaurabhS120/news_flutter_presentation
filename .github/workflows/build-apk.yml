@@ -1,6 +1,6 @@
 name: Build Android APK
-on:  pull_request  # Workflow triggered on pull request events
-branch: 
+on:
+  pull_request:  # Trigger on pull request events
 jobs:
   build_android:
     name: Build Android APK
