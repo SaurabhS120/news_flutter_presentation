@@ -4,10 +4,10 @@
 set -e
 
 # Configuration variables (replace with your details)
-#APP_OWNER=""
-#APP_NAME=""
-#API_TOKEN=""
-#APK_PATH=""
+APP_OWNER=""
+APP_NAME=""
+API_TOKEN=""
+APK_PATH=""
 
 # Function to display usage and exit
 function usage() {
