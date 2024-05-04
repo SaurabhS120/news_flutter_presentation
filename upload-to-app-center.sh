@@ -46,14 +46,14 @@ CHUNK_SIZE=$(echo "$metaDataResponse" | jq -r '.chunk_size')
 echo "Chunk Size = $CHUNK_SIZE"
 
 echo "=========CREATE FOLDER TEMP/SPLIT TO STORAGE LIST CHUNK FILE AFTER SPLIT=========="
-if [ -d "./upload_temp/temp" ]; then
+if [ -d "upload_temp/temp" ]; then
   echo "Folder exists!"
 else
-  mkdir "./upload_temp/temp"
+  mkdir -p "upload_temp/temp"
 fi
 
 echo "=========SPLIT FILE=========="
-split -b "$CHUNK_SIZE" "$RELEASE_FILE_LOCATION" "./upload_temp/temp/split"
+split -b "$CHUNK_SIZE" "$RELEASE_FILE_LOCATION" "upload_temp/temp/split"
 
 echo "=========UPLOAD CHUNK=========="
 BLOCK_NUMBER=0
