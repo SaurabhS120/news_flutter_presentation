@@ -28,22 +28,12 @@ jobs:
       - name: Delete .env file
         run: rm .env
 
-  APK_upload:
-    name: Build Android APK
-    runs-on: ubuntu-latest
-    needs: build_android
-    steps:
       - name: APK upload
         uses: actions/upload-artifact@v4
         with:
           name: android-build
           path: build/app/outputs/flutter-apk/app-release.apk
 
-  upload_to_app_center:
-    name: Upload to AppCenter
-    runs-on: ubuntu-latest
-    needs: build_android
-    steps:
       - name: Upload to AppCenter # The App Center Distribute Action
         run: |
           chmod +x upload-to-app-center.sh
