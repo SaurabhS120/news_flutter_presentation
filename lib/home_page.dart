@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_flutter/base_page/base_page.dart';
 import 'package:news_flutter_data_newsapi/di.dart';
@@ -40,11 +41,12 @@ class HomePageView extends StatelessWidget {
      builder: (context, newsList) {
        return ListView.separated(
          itemBuilder: (BuildContext context,int index){
+           String imageUrl = newsList.data?.left[index].imageUrl??'';
            return Padding(
              padding: const EdgeInsets.all(16.0),
              child: Column(
                children: [
-                 Image.network(newsList.data?.left[index].imageUrl??''),
+                 Visibility(visible: imageUrl.isNotEmpty,child: Image.network(imageUrl)),
                  Text(newsList.data?.left[index].title??''),
                ],
              ),
