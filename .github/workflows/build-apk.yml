@@ -42,7 +42,7 @@ jobs:
   deploy-app-center:
     name: Deply on App Center
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'refs/heads/master'  # Only run for PRs targeting master  # Only run this job on PR merge
+    if: github.event.pull_request.merged == true && github.event.ref == 'refs/heads/master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v2
