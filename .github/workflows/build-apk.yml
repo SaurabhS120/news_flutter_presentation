@@ -34,7 +34,8 @@ jobs:
           name: android-build
           path: build/app/outputs/flutter-apk/app-release.apk
 
-      - uses: actions/app-center@v2  # The App Center Distribute Action
+      - name: Upload to AppCenter
+        uses: actions/app-center@v2  # The App Center Distribute Action
           env:
             APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}  # Your upload token
           with:
