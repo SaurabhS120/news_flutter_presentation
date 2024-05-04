@@ -2,52 +2,52 @@ name: Build Android APK
 on:
   push:
 jobs:
-  build_android:
-    name: Build Android APK
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: |
-          echo github.event.pull_request.merged == true : ${{github.event.pull_request.merged == true}}
-          echo github.event.pull_request.base.ref : ${{github.event.pull_request.base.ref}}
-          echo github.event.ref : ${{github.event.ref}}
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 3.19.5
-
-      - name: add .env file
-        run: echo "NEWS_API_KEY=${{ secrets.NEWS_API_KEY }}" >> .env
-
-      - name: Pub clean
-        run: flutter clean
-
-      - name: Pub Get
-        run: flutter pub get
-
-      - name: Build apk
-        run: flutter build apk --release
-
-      - name: Delete .env file
-        run: rm .env
-
-      - name: APK upload
-        uses: actions/upload-artifact@v4
-        with:
-          name:  build-artifacts-${{ github.run_id }}.apk  # Include PR number in name
-          path: build/app/outputs/flutter-apk/app-release.apk
+#  build_android:
+#    name: Build Android APK
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: test
+#        run: |
+#          echo github.event.pull_request.merged == true : ${{github.event.pull_request.merged == true}}
+#          echo github.event.pull_request.base.ref : ${{github.event.pull_request.base.ref}}
+#          echo github.event.ref : ${{github.event.ref}}
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Flutter
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: 3.19.5
+#
+#      - name: add .env file
+#        run: echo "NEWS_API_KEY=${{ secrets.NEWS_API_KEY }}" >> .env
+#
+#      - name: Pub clean
+#        run: flutter clean
+#
+#      - name: Pub Get
+#        run: flutter pub get
+#
+#      - name: Build apk
+#        run: flutter build apk --release
+#
+#      - name: Delete .env file
+#        run: rm .env
+#
+#      - name: APK upload
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name:  build-artifacts-${{ github.run_id }}.apk  # Include PR number in name
+#          path: build/app/outputs/flutter-apk/app-release.apk
   deploy-app-center:
     name: Deply on App Center
     runs-on: ubuntu-latest
-    needs: build_android
+#    needs: build_android
     if: github.event.ref == 'refs/heads/master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: build-artifacts-${{ github.run_id }}.apk
+          name: build-artifacts.apk #build-artifacts-${{ github.run_id }}.apk
           path: build/app/outputs/flutter-apk/app-release.apk
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -63,4 +63,4 @@ jobs:
         run: npm install -g appcenter-cli
 
       - name: Upload APK to App Center
-        run: appcenter distribute release -f build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
+        run: appcenter distribute release -f ./build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
