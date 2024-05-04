@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: download apk
-        run: curl -o ./build/app/outputs/flutter-apk/app-release.apk https://github.com/bitbar/test-samples/raw/master/apps/android/bitbar-sample-app.apk
+        run: curl -o app-release.apk https://github.com/bitbar/test-samples/raw/master/apps/android/bitbar-sample-app.apk
 #  build_android:
 #    name: Build Android APK
 #    runs-on: ubuntu-latest
@@ -55,8 +55,6 @@ jobs:
 #        with:
 #          name: build-artifacts.apk
 #          path: build/app/outputs/flutter-apk/app-release.apk
-      - name: Apk file permission
-        run : sudo chmod 777 ./build/app/outputs/flutter-apk/app-release.apk
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -71,4 +69,4 @@ jobs:
         run: npm install -g appcenter-cli
 
       - name: Upload APK to App Center
-        run: appcenter distribute release -f ./build/app/outputs/flutter-apk/app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
+        run: appcenter distribute release -f app-release.apk -a saurabh.sonar120-gmail.com/News-App --group Public --token ${{secrets.APP_CENTER_TOKEN}}
