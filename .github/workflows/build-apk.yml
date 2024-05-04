@@ -1,6 +1,5 @@
 name: Build Android APK
 on:  pull_request  # Workflow triggered on pull request events
-branch: master
 jobs:
   build_android:
     name: Build Android APK
