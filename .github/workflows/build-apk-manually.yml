@@ -1,0 +1,40 @@
+name: Build Android APK Manually trigger
+on: workflow_dispatch
+jobs:
+  build_android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          echo github.event.pull_request.merged == true : ${{github.event.pull_request.merged == true}}
+          echo github.event.pull_request.base.ref : ${{github.event.pull_request.base.ref}}
+          echo github.event.ref : ${{github.event.ref}}
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.19.5
+
+      - name: add .env file
+        run: echo "NEWS_API_KEY=${{ secrets.NEWS_API_KEY }}" >> .env
+
+      - name: Pub clean
+        run: flutter clean
+
+      - name: Pub Get
+        run: flutter pub get
+
+      - name: Build apk
+        run: flutter build apk --release
+
+      - name: Delete .env file
+        run: rm .env
+
+      - name: APK upload
+        uses: actions/upload-artifact@v4
+        with:
+          name:  build-artifacts.apk  # Include PR number in name
+          path: build/app/outputs/flutter-apk/app-release.apk
