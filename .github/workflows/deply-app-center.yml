@@ -9,9 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true # && github.event.pull_request.base.ref == 'master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
+      - name: Get Last commit tag
+        run: PREV_COMMIT_ID=$(git rev-parse HEAD~1)
       - uses: actions/download-artifact@v4
         with:
-          name: build-artifacts-${{ github.sha }}  # Include merge timestamp
+          name: build-artifacts-${{ PREV_COMMIT_ID }}  # Include merge timestamp
           path: app-release.apk
       - name: Setup Node.js
         uses: actions/setup-node@v2
