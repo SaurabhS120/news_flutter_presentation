@@ -37,4 +37,4 @@ jobs:
       - name: Upload to AppCenter # The App Center Distribute Action
         run: |
           chmod +x upload-to-app-center.sh
-          ./upload-to-app-center.sh -o saurabh.sonar120-gmail.com -a News-App -t ${{ secrets.APP_CENTER_TOKEN }} -f build/app/outputs/flutter-apk/app-release.apk
+          ./upload-to-app-center.sh
