@@ -39,6 +39,11 @@ jobs:
         with:
           node-version: '14'
 
+      - name: Update npm packages
+        run: |
+          npm install formidable@latest
+          npm install superagent@latest
+
       - name: Install app center
         run: npm install -g appcenter-cli
 
