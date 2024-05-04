@@ -39,7 +39,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
-      - uses: build-apk.yml
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
