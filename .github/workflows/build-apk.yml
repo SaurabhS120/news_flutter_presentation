@@ -10,6 +10,7 @@ jobs:
         run: |
           echo github.event.pull_request.merged == true : ${{github.event.pull_request.merged == true}}
           echo github.event.pull_request.base.ref : ${{github.event.pull_request.base.ref}}
+          echo github.event.ref : ${{github.event.ref}}
       - name: Checkout code
         uses: actions/checkout@v4
 
