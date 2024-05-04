@@ -49,8 +49,10 @@ jobs:
         with:
           name: build-artifacts.apk
           path: build/app/outputs/flutter-apk/app-release.apk
+          
       - name: Apk file permission
         run : sudo chmod 777 /build/app/outputs/flutter-apk/app-release.apk
+        
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
