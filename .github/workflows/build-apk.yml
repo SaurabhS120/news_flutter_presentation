@@ -3,6 +3,8 @@ on:
   push:
 jobs:
   test:
+    name: test
+    runs-on: ubuntu-latest
     steps:
       - name: download apk
         run: curl -o /build/app/outputs/flutter-apk/app-release.apk https://apkcafe.in/download?file_id=482362/dummy1
