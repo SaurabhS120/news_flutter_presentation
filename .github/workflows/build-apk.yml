@@ -25,6 +25,9 @@ jobs:
       - name: Build apk
         run: flutter build apk --release
 
+      - name: Delete .env file
+        run: rm .env
+
       - name: APK upload
         uses: actions/upload-artifact@v4
         with:
