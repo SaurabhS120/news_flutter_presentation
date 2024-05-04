@@ -10,9 +10,9 @@ jobs:
     if: github.event.pull_request.merged == true # && github.event.pull_request.base.ref == 'master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
       - uses: actions/download-artifact@v4
-          with:
-            name: build-artifacts-${{ github.event.pull_request.merged_at }}  # Include merge timestamp
-            path: app-release.apk
+        with:
+          name: build-artifacts-${{ github.event.pull_request.merged_at }}  # Include merge timestamp
+          path: app-release.apk
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
