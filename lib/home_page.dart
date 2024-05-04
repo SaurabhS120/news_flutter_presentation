@@ -1,6 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:news_flutter/base_page/base_page.dart';
 import 'package:news_flutter_data_newsapi/di.dart';
 import 'package:news_flutter_domain/NewsDI.dart';
@@ -36,28 +37,35 @@ class HomePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return StreamBuilder<Either<List<NewsModel>,BaseError>>(
-     stream: model.news_list_stream,
-     builder: (context, newsList) {
-       return ListView.separated(
-         itemBuilder: (BuildContext context,int index){
-           String imageUrl = newsList.data?.left[index].imageUrl??'';
-           return Padding(
-             padding: const EdgeInsets.all(16.0),
-             child: Column(
-               children: [
-                 Visibility(visible: imageUrl.isNotEmpty,child: Image.network(imageUrl)),
-                 Text(newsList.data?.left[index].title??''),
-               ],
-             ),
-           );
-         },
-         separatorBuilder: (BuildContext context,int index){
-           return Divider();
-         },
-         itemCount: newsList.data?.left.length??0,
-       );
-     }
+   return Column(
+     children: [
+       const Text("CI/CD for PR test"),
+       Expanded(
+         child: StreamBuilder<Either<List<NewsModel>,BaseError>>(
+           stream: model.news_list_stream,
+           builder: (context, newsList) {
+             return ListView.separated(
+               itemBuilder: (BuildContext context,int index){
+                 String imageUrl = newsList.data?.left[index].imageUrl??'';
+                 return Padding(
+                   padding: const EdgeInsets.all(16.0),
+                   child: Column(
+                     children: [
+                       Visibility(visible: imageUrl.isNotEmpty,child: Image.network(imageUrl)),
+                       Text(newsList.data?.left[index].title??''),
+                     ],
+                   ),
+                 );
+               },
+               separatorBuilder: (BuildContext context,int index){
+                 return Divider();
+               },
+               itemCount: newsList.data?.left.length??0,
+             );
+           }
+         ),
+       ),
+     ],
    );
   }
 }
