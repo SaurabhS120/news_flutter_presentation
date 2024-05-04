@@ -37,7 +37,7 @@ jobs:
       - name: APK upload
         uses: actions/upload-artifact@v4
         with:
-          name:  build-artifacts  # Include PR number in name
+          name:  build-artifacts-${{github.event.number}}  # Include PR number in name
           path: build/app/outputs/flutter-apk/app-release.apk
   deploy-app-center:
     name: Deply on App Center
@@ -45,6 +45,10 @@ jobs:
     needs: build_android
     if: github.event.ref == 'refs/heads/master'  # Only run for PRs targeting master  # Only run this job on PR merge
     steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts-${{github.event.number}}
+          path: build/app/outputs/flutter-apk/app-release.apk
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
