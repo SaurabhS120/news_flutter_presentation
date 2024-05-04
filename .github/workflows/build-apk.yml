@@ -1,7 +1,6 @@
 name: Build Android APK
 on:
-  pull_request:  # Trigger on pull request events
-    type: [ open ]
+  push:
 jobs:
   build_android:
     name: Build Android APK
