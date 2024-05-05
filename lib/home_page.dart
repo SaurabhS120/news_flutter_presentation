@@ -30,9 +30,12 @@ class HomePageState extends BasePageState<HomePage> {
 
   @override
   Widget buildBody(BuildContext context) {
-    return Consumer<HomePageViewModel>(
-        builder: (BuildContext context, model, child) =>
-            HomePageView(model: model));
+    return Provider<HomePageViewModel>(
+      create: (BuildContext context) => HomePageViewModel(),
+      child: Consumer<HomePageViewModel>(
+          builder: (BuildContext context, model, child) =>
+              HomePageView(model: model)),
+    );
   }
 }
 

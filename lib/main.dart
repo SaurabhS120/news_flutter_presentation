@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:news_flutter/home_page.dart';
-import 'package:news_flutter/news_details_page.dart';
 import 'package:news_flutter/router.dart';
-import 'package:provider/provider.dart';
 
 late DotEnv dotEnv;
 
@@ -35,18 +32,6 @@ class MyApp extends StatelessWidget {
       ),
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: AppRoutePaths.home,
-      home: MultiProvider(providers: [
-        Provider(
-          create: (BuildContext context) {
-            return HomePageViewModel();
-          },
-        ),
-        Provider(
-          create: (BuildContext context) {
-            return NewsDetailsPageViewModel();
-          },
-        ),
-      ], child: HomePage()),
     );
   }
 }

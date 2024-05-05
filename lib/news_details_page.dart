@@ -20,12 +20,6 @@ class NewsDetailsPageArgs {
 
 class NewsDetailsPageState extends BasePageState<NewsDetailsPage> {
   @override
-  void initState() {
-    super.initState();
-    Provider.of<NewsDetailsPageViewModel>(context).arguments = widget.args;
-  }
-
-  @override
   PreferredSizeWidget buildAppBar() {
     return AppBar(
       title: const Text('home page'),
@@ -34,9 +28,13 @@ class NewsDetailsPageState extends BasePageState<NewsDetailsPage> {
 
   @override
   Widget buildBody(BuildContext context) {
-    return Consumer<NewsDetailsPageViewModel>(
-        builder: (BuildContext context, model, child) =>
-            NewsDetailsPageView(model: model));
+    return Provider(
+      create: (BuildContext context) =>
+          NewsDetailsPageViewModel(arguments: widget.args),
+      child: Consumer<NewsDetailsPageViewModel>(
+          builder: (BuildContext context, model, child) =>
+              NewsDetailsPageView(model: model)),
+    );
   }
 }
 
@@ -47,15 +45,21 @@ class NewsDetailsPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NewsModel? news = model.arguments?.news;
+    NewsModel? news = model.arguments.news;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           Visibility(
-              visible: news?.imageUrl.isNotEmpty ?? false,
-              child: Image.network(news!.imageUrl)),
-          Text(news.title),
+              visible: news.imageUrl.isNotEmpty,
+              child: Image.network(news.imageUrl)),
+          const SizedBox(
+            height: 12,
+          ),
+          Text(
+            news.title,
+            style: const TextStyle(fontSize: 16),
+          ),
         ],
       ),
     );
@@ -68,5 +72,7 @@ class NewsDetailsPageView extends StatelessWidget {
 /// To hold UI state, required controllers
 /// Calculations like validation, data filtration, sorting
 class NewsDetailsPageViewModel {
-  NewsDetailsPageArgs? arguments;
+  final NewsDetailsPageArgs arguments;
+
+  NewsDetailsPageViewModel({required this.arguments});
 }
