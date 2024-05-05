@@ -29,6 +29,10 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+            color: Colors.blueAccent,
+            elevation: 4,
+            shadowColor: Colors.blueGrey),
       ),
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: AppRoutePaths.home,
