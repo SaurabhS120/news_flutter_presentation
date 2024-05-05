@@ -46,47 +46,39 @@ class HomePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text("CI/CD for PR test 3"),
-        Expanded(
-          child: StreamBuilder<Either<List<NewsModel>, BaseError>>(
-              stream: model.news_list_stream,
-              builder: (context, newsList) {
-                return ListView.separated(
-                  itemBuilder: (BuildContext context, int index) {
-                    String imageUrl = newsList.data?.left[index].imageUrl ?? '';
-                    return InkWell(
-                      onTap: () {
-                        NewsModel? news = newsList.data?.left[index];
-                        if (news != null) {
-                          Navigator.pushNamed(
-                              context, AppRoutePaths.newsDetails,
-                              arguments: NewsDetailsPageArgs(news: news));
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Visibility(
-                                visible: imageUrl.isNotEmpty,
-                                child: Image.network(imageUrl)),
-                            Text(newsList.data?.left[index].title ?? ''),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider();
-                  },
-                  itemCount: newsList.data?.left.length ?? 0,
-                );
-              }),
-        ),
-      ],
-    );
+    return StreamBuilder<Either<List<NewsModel>, BaseError>>(
+        stream: model.news_list_stream,
+        builder: (context, newsList) {
+          return ListView.separated(
+            itemBuilder: (BuildContext context, int index) {
+              String imageUrl = newsList.data?.left[index].imageUrl ?? '';
+              return InkWell(
+                onTap: () {
+                  NewsModel? news = newsList.data?.left[index];
+                  if (news != null) {
+                    Navigator.pushNamed(context, AppRoutePaths.newsDetails,
+                        arguments: NewsDetailsPageArgs(news: news));
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Visibility(
+                          visible: imageUrl.isNotEmpty,
+                          child: Image.network(imageUrl)),
+                      Text(newsList.data?.left[index].title ?? ''),
+                    ],
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return Divider();
+            },
+            itemCount: newsList.data?.left.length ?? 0,
+          );
+        });
   }
 }
 
