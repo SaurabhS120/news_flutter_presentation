@@ -22,7 +22,7 @@ class NewsDetailsPageState extends BasePageState<NewsDetailsPage> {
   @override
   PreferredSizeWidget buildAppBar() {
     return AppBar(
-      title: const Text('home page'),
+      title: const Text('News Details'),
     );
   }
 
