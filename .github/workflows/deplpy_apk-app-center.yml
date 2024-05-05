@@ -1,7 +1,7 @@
 name: Build Android APK Manually trigger
 on:
   push:
-    tag: [ * ]
+    tags:
 jobs:
   build_android:
     name: Build Android APK
