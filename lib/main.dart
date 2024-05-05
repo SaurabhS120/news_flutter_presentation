@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:news_flutter/home_page.dart';
+import 'package:news_flutter/news_details_page.dart';
+import 'package:news_flutter/router.dart';
 import 'package:provider/provider.dart';
+
 late DotEnv dotEnv;
-void main() async{
+
+void main() async {
   dotEnv = DotEnv();
   await dotEnv.load();
   runApp(const MyApp());
@@ -29,12 +33,20 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Provider(
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      initialRoute: AppRoutePaths.home,
+      home: MultiProvider(providers: [
+        Provider(
           create: (BuildContext context) {
             return HomePageViewModel();
           },
-          child: HomePage()
-      ),
+        ),
+        Provider(
+          create: (BuildContext context) {
+            return NewsDetailsPageViewModel();
+          },
+        ),
+      ], child: HomePage()),
     );
   }
 }
