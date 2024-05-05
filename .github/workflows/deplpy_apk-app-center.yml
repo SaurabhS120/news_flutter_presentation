@@ -1,4 +1,4 @@
-name: Build Android APK Manually trigger
+name: Build Android APK and Upload to App Center by version tag
 on:
   push:
     tags: # This section triggers the workflow on tag pushes (and creations)
