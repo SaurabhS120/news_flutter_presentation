@@ -53,7 +53,7 @@ class NewsDetailsPageView extends StatelessWidget {
           children: [
             Visibility(
                 visible: news.imageUrl.isNotEmpty,
-                child: Image.network(news.imageUrl)),
+                child: Hero(tag: 'newsImg${news.imageUrl}',child: Image.network(news.imageUrl))),
             const SizedBox(
               height: 12,
             ),
