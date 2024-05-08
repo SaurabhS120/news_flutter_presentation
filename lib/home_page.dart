@@ -31,7 +31,11 @@ class HomePageState extends BasePageState<HomePage> {
   @override
   Widget buildBody(BuildContext context) {
     return Provider<HomePageViewModel>(
-      create: (BuildContext context) => HomePageViewModel(),
+      create: (BuildContext context) {
+        NewsDI newsDI = NewsApiDI(apiKey: dotEnv.env['NEWS_API_KEY'] ?? '');
+        GetNewsUseCase getNewsUseCase = newsDI.createGetNewsUseCase();
+        return HomePageViewModel(getNewsUseCase);
+      },
       child: Consumer<HomePageViewModel>(
           builder: (BuildContext context, model, child) =>
               HomePageView(model: model)),
@@ -88,10 +92,9 @@ class HomePageView extends StatelessWidget {
 /// To hold UI state, required controllers
 /// Calculations like validation, data filtration, sorting
 class HomePageViewModel {
-  NewsDI newsDI = NewsApiDI(apiKey: dotEnv.env['NEWS_API_KEY'] ?? '');
-  late GetNewsUseCase getNewsUseCase = newsDI.createGetNewsUseCase();
+  final GetNewsUseCase getNewsUseCase;
 
-  HomePageViewModel() {
+  HomePageViewModel(this.getNewsUseCase) {
     getNewsList();
   }
 
