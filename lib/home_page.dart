@@ -64,9 +64,7 @@ class HomePageView extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Visibility(
-                          visible: imageUrl.isNotEmpty,
-                          child: Image.network(imageUrl)),
+                      Visibility(visible: imageUrl.isNotEmpty, child: Hero(tag: "newsImg$imageUrl", child: Image.network(imageUrl))),
                       Text(newsList.data?.left[index].title ?? ''),
                     ],
                   ),
