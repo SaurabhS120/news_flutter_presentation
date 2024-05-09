@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:news_flutter/home_page.dart';
+import 'package:news_flutter_data_newsapi/api_service.dart';
 import 'package:news_flutter_data_newsapi/entity/news_response_entity.dart';
 import 'package:news_flutter_domain/errors/base_error.dart';
 import 'package:news_flutter_domain/model/news_model.dart';
@@ -12,8 +13,10 @@ import 'package:news_flutter_domain/usecase/get_news_usecase.dart';
 
 import 'home_page_test.mocks.dart';
 
+/// This is the implementation of Repo in domain layer
+
 // Annotation which generates the cat.mocks.dart library and the MockCat class.
-@GenerateNiceMocks([MockSpec<NewsRepo>()])
+@GenerateNiceMocks([MockSpec<NewsRepo>(), MockSpec<ApiService>(), MockSpec<GetNewsUseCase>()])
 void main() async {
   NewsRepo newsRepo = MockNewsRepo();
   Either<List<NewsModel>, BaseError> dummyResponse = const Left([]);
@@ -121,5 +124,49 @@ void main() async {
       debugPrint("imageUrl : $expected");
       expect(responseEntity.articles[2].urlToImage, expected);
     });
+
+    test("Api testing", () async {
+      MockApiService apiService = MockApiService();
+
+      when(apiService.everything(
+        q: anyNamed('q'),
+        from: anyNamed('from'),
+        sortBy: anyNamed('sortBy'),
+        apiKey: anyNamed('apiKey'),
+      )).thenAnswer((realInvocation) => Future(() => responseEntity));
+      NewsRepo newsRepo = NewsApiRepoImpl(apiKey: '', apiService: apiService);
+      NewsResponseEntity? apiResponse = await apiService.everything(q: '', from: '', sortBy: '', apiKey: '');
+      debugPrint(apiResponse.articles.first.title);
+    });
+
+    test("Get news use case mocking", () {
+      MockGetNewsUseCase mockGetNewsUseCase = MockGetNewsUseCase();
+      when(mockGetNewsUseCase.execute(any)).thenAnswer((realInvocation) => Future(() => const Left([])));
+      mockGetNewsUseCase.execute(GetNewsUseCaseParams());
+    });
   });
+}
+
+/// This will be the actual implementation which will be responsible for api or
+/// database call in order to fetch data
+class NewsApiRepoImpl implements NewsRepo {
+  final String apiKey;
+
+  NewsApiRepoImpl({required this.apiKey, required this.apiService});
+
+  final ApiService apiService;
+
+  // ApiService apiService = ApiService(Dio()..interceptors.add(PrettyDioLogger()), baseUrl: 'https://newsapi.org/v2');
+  ///This is the implementation for function of domain layer repo
+  /// This will be the actual implementation which will be responsible for api or
+  /// database call in order to fetch data
+  @override
+  Future<Either<List<NewsModel>, BaseError>> getNews() async {
+    DateTime dateTime = DateTime.now();
+    String dd = dateTime.day.toString().padLeft(2, '0');
+    String mm = (dateTime.month - 1).toString().padLeft(2, '0');
+    String yyyy = dateTime.year.toString();
+    final List<NewsModel> newsList = (await apiService.everything(q: 'tesla', from: '$yyyy-$mm-$dd', sortBy: 'publishedAt', apiKey: apiKey)).transform();
+    return Left(newsList);
+  }
 }
