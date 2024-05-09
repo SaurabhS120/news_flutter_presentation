@@ -144,6 +144,12 @@ void main() async {
       when(mockGetNewsUseCase.execute(any)).thenAnswer((realInvocation) => Future(() => const Left([])));
       mockGetNewsUseCase.execute(GetNewsUseCaseParams());
     });
+
+    test("get news api should be called on app load", () {
+      MockGetNewsUseCase mockGetNewsUseCase = MockGetNewsUseCase();
+      HomePageViewModel(mockGetNewsUseCase);
+      verify(mockGetNewsUseCase.execute(any)).called(1);
+    });
   });
 }
 
