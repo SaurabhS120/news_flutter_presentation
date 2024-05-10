@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:news_flutter/home_page.dart';
+import 'package:news_flutter/home_page_view_model.dart';
 import 'package:news_flutter_data_newsapi/api_service.dart';
 import 'package:news_flutter_data_newsapi/entity/news_response_entity.dart';
 import 'package:news_flutter_domain/errors/base_error.dart';
@@ -18,10 +18,16 @@ import 'home_page_test.mocks.dart';
 // Annotation which generates the cat.mocks.dart library and the MockCat class.
 @GenerateNiceMocks([MockSpec<NewsRepo>(), MockSpec<ApiService>(), MockSpec<GetNewsUseCase>()])
 void main() async {
-  NewsRepo newsRepo = MockNewsRepo();
-  Either<List<NewsModel>, BaseError> dummyResponse = const Left([]);
-  provideDummy(dummyResponse);
-  GetNewsUseCase getNewsUseCase = GetNewsUseCase(newsRepo);
+  late NewsRepo newsRepo;
+  late Either<List<NewsModel>, BaseError> dummyResponse = const Left([]);
+  late GetNewsUseCase getNewsUseCase;
+
+  setUpAll(() {
+    newsRepo = MockNewsRepo();
+    dummyResponse = const Left([]);
+    provideDummy(dummyResponse);
+    getNewsUseCase = GetNewsUseCase(newsRepo);
+  });
 
   test("News repo test", () async {
     when(newsRepo.getNews()).thenAnswer((_) => Future(() => dummyResponse));
@@ -92,10 +98,10 @@ void main() async {
         },
       ],
     };
-    NewsResponseEntity responseEntity = NewsResponseEntity.fromJson(response);
-    String? expected = "";
 
     test("News title parsing test", () {
+      NewsResponseEntity responseEntity = NewsResponseEntity.fromJson(response);
+      String? expected = "";
       expect(responseEntity.articles.first.title,
           "Chinese EV maker Nio to launch its lower-priced brand Onvo on May 15");
       expected = response['articles'][0]['title'];
@@ -110,6 +116,8 @@ void main() async {
     });
 
     test("News image url parse test", () {
+      NewsResponseEntity responseEntity = NewsResponseEntity.fromJson(response);
+      String? expected = "";
       expected = response['articles'][0]['urlToImage'];
       debugPrint("imageUrl : $expected");
       expect(responseEntity.articles[0].urlToImage, expected);
@@ -126,6 +134,7 @@ void main() async {
     });
 
     test("Api testing", () async {
+      NewsResponseEntity responseEntity = NewsResponseEntity.fromJson(response);
       MockApiService apiService = MockApiService();
 
       when(apiService.everything(
@@ -134,7 +143,7 @@ void main() async {
         sortBy: anyNamed('sortBy'),
         apiKey: anyNamed('apiKey'),
       )).thenAnswer((realInvocation) => Future(() => responseEntity));
-      NewsRepo newsRepo = NewsApiRepoImpl(apiKey: '', apiService: apiService);
+      NewsApiRepoImpl(apiKey: '', apiService: apiService);
       NewsResponseEntity? apiResponse = await apiService.everything(q: '', from: '', sortBy: '', apiKey: '');
       debugPrint(apiResponse.articles.first.title);
     });

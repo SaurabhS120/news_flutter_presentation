@@ -45,3 +45,5 @@ app.*.map.json
 
 # Secrets
 .env
+# test coverage file
+coverage/lcov.info
