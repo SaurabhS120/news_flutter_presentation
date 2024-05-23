@@ -160,6 +160,33 @@ void main() async {
       verify(mockGetNewsUseCase.execute(any)).called(1);
     });
   });
+  group('HomePageViewModel', () {
+    late MockGetNewsUseCase getNewsUseCase;
+    late HomePageViewModel homePageViewModel;
+
+    setUp(() {
+      getNewsUseCase = MockGetNewsUseCase();
+      homePageViewModel = HomePageViewModel(getNewsUseCase);
+    });
+
+    test('fetches news on creation', () {
+      verify(getNewsUseCase.execute(any)).called(1);
+    });
+
+    test('emits news list when fetch is successful', () async {
+      Either<List<NewsModel>, BaseError> response = Left([NewsModel(imageUrl: 'url', title: 'title')]);
+      when(getNewsUseCase.execute(any)).thenAnswer((_) async => response);
+      HomePageViewModel homePageViewModel = HomePageViewModel(getNewsUseCase);
+      expect(homePageViewModel.news_list_stream, emitsInOrder([response]));
+    });
+
+    test('emits error when fetch fails', () async {
+      Either<List<NewsModel>, BaseError> response = Right(BaseError());
+      when(getNewsUseCase.execute(any)).thenAnswer((_) async =>  response);
+      HomePageViewModel homePageViewModel = HomePageViewModel(getNewsUseCase);
+      expect(homePageViewModel.news_list_stream, emitsInOrder([response]));
+    });
+  });
 }
 
 /// This will be the actual implementation which will be responsible for api or
