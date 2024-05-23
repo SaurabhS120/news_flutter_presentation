@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_flutter/base_page/base_page.dart';
 import 'package:news_flutter_domain/model/news_model.dart';
@@ -51,7 +52,13 @@ class NewsDetailsPageView extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Visibility(visible: news.imageUrl.isNotEmpty, child: Hero(tag: 'newsImg${news.imageUrl}', child: Image.network(news.imageUrl))),
+            Visibility(visible: news.imageUrl.isNotEmpty, child: Hero(tag: 'newsImg${news.imageUrl}',
+                child: CachedNetworkImage(
+                  imageUrl: news.imageUrl,
+                  placeholder: (context, url) => const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+            )),
             const SizedBox(
               height: 12,
             ),

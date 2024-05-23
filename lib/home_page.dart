@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:news_flutter/base_page/base_page.dart';
@@ -68,7 +69,13 @@ class HomePageView extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Visibility(visible: imageUrl.isNotEmpty, child: Hero(tag: "newsImg$imageUrl", child: Image.network(imageUrl))),
+                      Visibility(visible: imageUrl.isNotEmpty, child: Hero(tag: "newsImg$imageUrl",
+                          child: CachedNetworkImage(
+                            imageUrl: imageUrl,
+                            placeholder: (context, url) => const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                          ),
+                      )),
                       Text(newsList.data?.left[index].title ?? ''),
                     ],
                   ),
