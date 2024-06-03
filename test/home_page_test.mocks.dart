@@ -3,14 +3,17 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
-import 'package:either_dart/either.dart' as _i4;
+import 'package:either_dart/either.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i7;
-import 'package:news_flutter_domain/errors/base_error.dart' as _i6;
-import 'package:news_flutter_domain/model/news_model.dart' as _i5;
-import 'package:news_flutter_domain/repo/news_repo.dart' as _i2;
+import 'package:mockito/src/dummies.dart' as _i8;
+import 'package:news_flutter_data_newsapi/api_service.dart' as _i9;
+import 'package:news_flutter_data_newsapi/entity/news_response_entity.dart' as _i2;
+import 'package:news_flutter_domain/errors/base_error.dart' as _i7;
+import 'package:news_flutter_domain/model/news_model.dart' as _i6;
+import 'package:news_flutter_domain/repo/news_repo.dart' as _i3;
+import 'package:news_flutter_domain/usecase/get_news_usecase.dart' as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -25,34 +28,140 @@ import 'package:news_flutter_domain/repo/news_repo.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeNewsResponseEntity_0 extends _i1.SmartFake implements _i2.NewsResponseEntity {
+  _FakeNewsResponseEntity_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeNewsRepo_1 extends _i1.SmartFake implements _i3.NewsRepo {
+  _FakeNewsRepo_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [NewsRepo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNewsRepo extends _i1.Mock implements _i2.NewsRepo {
+class MockNewsRepo extends _i1.Mock implements _i3.NewsRepo {
   @override
-  _i3.Future<_i4.Either<List<_i5.NewsModel>, _i6.BaseError>> getNews() =>
-      (super.noSuchMethod(
+  _i4.Future<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>> getNews() => (super.noSuchMethod(
         Invocation.method(
           #getNews,
           [],
         ),
-        returnValue:
-            _i3.Future<_i4.Either<List<_i5.NewsModel>, _i6.BaseError>>.value(
-                _i7.dummyValue<_i4.Either<List<_i5.NewsModel>, _i6.BaseError>>(
+        returnValue: _i4.Future<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>.value(_i8.dummyValue<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>(
           this,
           Invocation.method(
             #getNews,
             [],
           ),
         )),
-        returnValueForMissingStub:
-            _i3.Future<_i4.Either<List<_i5.NewsModel>, _i6.BaseError>>.value(
-                _i7.dummyValue<_i4.Either<List<_i5.NewsModel>, _i6.BaseError>>(
+        returnValueForMissingStub: _i4.Future<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>.value(_i8.dummyValue<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>(
           this,
           Invocation.method(
             #getNews,
             [],
           ),
         )),
-      ) as _i3.Future<_i4.Either<List<_i5.NewsModel>, _i6.BaseError>>);
+      ) as _i4.Future<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>);
+}
+
+/// A class which mocks [ApiService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockApiService extends _i1.Mock implements _i9.ApiService {
+  @override
+  _i4.Future<_i2.NewsResponseEntity> everything({
+    required String? q,
+    required String? from,
+    required String? sortBy,
+    required String? apiKey,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #everything,
+          [],
+          {
+            #q: q,
+            #from: from,
+            #sortBy: sortBy,
+            #apiKey: apiKey,
+          },
+        ),
+        returnValue: _i4.Future<_i2.NewsResponseEntity>.value(_FakeNewsResponseEntity_0(
+          this,
+          Invocation.method(
+            #everything,
+            [],
+            {
+              #q: q,
+              #from: from,
+              #sortBy: sortBy,
+              #apiKey: apiKey,
+            },
+          ),
+        )),
+        returnValueForMissingStub: _i4.Future<_i2.NewsResponseEntity>.value(_FakeNewsResponseEntity_0(
+          this,
+          Invocation.method(
+            #everything,
+            [],
+            {
+              #q: q,
+              #from: from,
+              #sortBy: sortBy,
+              #apiKey: apiKey,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.NewsResponseEntity>);
+}
+
+/// A class which mocks [GetNewsUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetNewsUseCase extends _i1.Mock implements _i10.GetNewsUseCase {
+  @override
+  _i3.NewsRepo get repo => (super.noSuchMethod(
+        Invocation.getter(#repo),
+        returnValue: _FakeNewsRepo_1(
+          this,
+          Invocation.getter(#repo),
+        ),
+        returnValueForMissingStub: _FakeNewsRepo_1(
+          this,
+          Invocation.getter(#repo),
+        ),
+      ) as _i3.NewsRepo);
+
+  @override
+  _i4.Future<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>> execute(_i10.GetNewsUseCaseParams? params) => (super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [params],
+        ),
+        returnValue: _i4.Future<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>.value(_i8.dummyValue<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>(
+          this,
+          Invocation.method(
+            #execute,
+            [params],
+          ),
+        )),
+        returnValueForMissingStub: _i4.Future<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>.value(_i8.dummyValue<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>(
+          this,
+          Invocation.method(
+            #execute,
+            [params],
+          ),
+        )),
+      ) as _i4.Future<_i5.Either<List<_i6.NewsModel>, _i7.BaseError>>);
 }

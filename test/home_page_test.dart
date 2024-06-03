@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:news_flutter/home_page.dart';
+import 'package:news_flutter/home_page_view_model.dart';
+import 'package:news_flutter_data_newsapi/api_service.dart';
 import 'package:news_flutter_data_newsapi/entity/news_response_entity.dart';
 import 'package:news_flutter_domain/errors/base_error.dart';
 import 'package:news_flutter_domain/model/news_model.dart';
@@ -12,13 +13,21 @@ import 'package:news_flutter_domain/usecase/get_news_usecase.dart';
 
 import 'home_page_test.mocks.dart';
 
+/// This is the implementation of Repo in domain layer
+
 // Annotation which generates the cat.mocks.dart library and the MockCat class.
-@GenerateNiceMocks([MockSpec<NewsRepo>()])
+@GenerateNiceMocks([MockSpec<NewsRepo>(), MockSpec<ApiService>(), MockSpec<GetNewsUseCase>()])
 void main() async {
-  NewsRepo newsRepo = MockNewsRepo();
-  Either<List<NewsModel>, BaseError> dummyResponse = const Left([]);
-  provideDummy(dummyResponse);
-  GetNewsUseCase getNewsUseCase = GetNewsUseCase(newsRepo);
+  late NewsRepo newsRepo;
+  late Either<List<NewsModel>, BaseError> dummyResponse = const Left([]);
+  late GetNewsUseCase getNewsUseCase;
+
+  setUpAll(() {
+    newsRepo = MockNewsRepo();
+    dummyResponse = const Left([]);
+    provideDummy(dummyResponse);
+    getNewsUseCase = GetNewsUseCase(newsRepo);
+  });
 
   test("News repo test", () async {
     when(newsRepo.getNews()).thenAnswer((_) => Future(() => dummyResponse));
@@ -89,10 +98,10 @@ void main() async {
         },
       ],
     };
-    NewsResponseEntity responseEntity = NewsResponseEntity.fromJson(response);
-    String? expected = "";
 
     test("News title parsing test", () {
+      NewsResponseEntity responseEntity = NewsResponseEntity.fromJson(response);
+      String? expected = "";
       expect(responseEntity.articles.first.title,
           "Chinese EV maker Nio to launch its lower-priced brand Onvo on May 15");
       expected = response['articles'][0]['title'];
@@ -107,6 +116,8 @@ void main() async {
     });
 
     test("News image url parse test", () {
+      NewsResponseEntity responseEntity = NewsResponseEntity.fromJson(response);
+      String? expected = "";
       expected = response['articles'][0]['urlToImage'];
       debugPrint("imageUrl : $expected");
       expect(responseEntity.articles[0].urlToImage, expected);
@@ -121,5 +132,56 @@ void main() async {
       debugPrint("imageUrl : $expected");
       expect(responseEntity.articles[2].urlToImage, expected);
     });
+
+    test("Api testing", () async {
+      NewsResponseEntity responseEntity = NewsResponseEntity.fromJson(response);
+      MockApiService apiService = MockApiService();
+
+      when(apiService.everything(
+        q: anyNamed('q'),
+        from: anyNamed('from'),
+        sortBy: anyNamed('sortBy'),
+        apiKey: anyNamed('apiKey'),
+      )).thenAnswer((realInvocation) => Future(() => responseEntity));
+      NewsApiRepoImpl(apiKey: '', apiService: apiService);
+      NewsResponseEntity? apiResponse = await apiService.everything(q: '', from: '', sortBy: '', apiKey: '');
+      debugPrint(apiResponse.articles.first.title);
+    });
+
+    test("Get news use case mocking", () {
+      MockGetNewsUseCase mockGetNewsUseCase = MockGetNewsUseCase();
+      when(mockGetNewsUseCase.execute(any)).thenAnswer((realInvocation) => Future(() => const Left([])));
+      mockGetNewsUseCase.execute(GetNewsUseCaseParams());
+    });
+
+    test("get news api should be called on app load", () {
+      MockGetNewsUseCase mockGetNewsUseCase = MockGetNewsUseCase();
+      HomePageViewModel(mockGetNewsUseCase);
+      verify(mockGetNewsUseCase.execute(any)).called(1);
+    });
   });
+}
+
+/// This will be the actual implementation which will be responsible for api or
+/// database call in order to fetch data
+class NewsApiRepoImpl implements NewsRepo {
+  final String apiKey;
+
+  NewsApiRepoImpl({required this.apiKey, required this.apiService});
+
+  final ApiService apiService;
+
+  // ApiService apiService = ApiService(Dio()..interceptors.add(PrettyDioLogger()), baseUrl: 'https://newsapi.org/v2');
+  ///This is the implementation for function of domain layer repo
+  /// This will be the actual implementation which will be responsible for api or
+  /// database call in order to fetch data
+  @override
+  Future<Either<List<NewsModel>, BaseError>> getNews() async {
+    DateTime dateTime = DateTime.now();
+    String dd = dateTime.day.toString().padLeft(2, '0');
+    String mm = (dateTime.month - 1).toString().padLeft(2, '0');
+    String yyyy = dateTime.year.toString();
+    final List<NewsModel> newsList = (await apiService.everything(q: 'tesla', from: '$yyyy-$mm-$dd', sortBy: 'publishedAt', apiKey: apiKey)).transform();
+    return Left(newsList);
+  }
 }

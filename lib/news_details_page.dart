@@ -46,21 +46,21 @@ class NewsDetailsPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NewsModel? news = model.arguments.news;
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Visibility(
-              visible: news.imageUrl.isNotEmpty,
-              child: Image.network(news.imageUrl)),
-          const SizedBox(
-            height: 12,
-          ),
-          Text(
-            news.title,
-            style: const TextStyle(fontSize: 16),
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Visibility(visible: news.imageUrl.isNotEmpty, child: Hero(tag: 'newsImg${news.imageUrl}', child: Image.network(news.imageUrl))),
+            const SizedBox(
+              height: 12,
+            ),
+            Text(
+              news.title,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
       ),
     );
   }
