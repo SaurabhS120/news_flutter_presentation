@@ -10,8 +10,9 @@ Engine • revision 3ad69d7be3
 Tools • Dart 2.18.2 • DevTools 2.15.0
 
 ### Clean Architecture with MVVM
-In Clean Architecture we have data domain and presentation layer
-![CleanArchitectureLayers](https://github.com/SaurabhS120/news_flutter/assets/70626113/1ec19f43-fa06-4171-9415-1c1cf07f3f25)
+In Clean Architecture we have data domain and presentation layer.
+<br/><br/>
+<img src="https://github.com/SaurabhS120/news_flutter/assets/70626113/1ec19f43-fa06-4171-9415-1c1cf07f3f25" width="500"/>
 #### Domain layer:
 Domain layer is Innermost layer of clean architecture which contains Plain data models, Repository abstractions/interfaces and Usecases.
 Usecases are mediator between presentation and domain later which will be used to store and retrive data. Each usecase will call repository functions in order tp perform operations.
@@ -37,7 +38,7 @@ View contains ui which will be visible to user. It will only contain UI implemen
 We have added documentation for each function for easy understanding.
 In dart all comments with triple slash /// gets added into documentation.
 By hovering on any function in android studio we can get information about their uses
-![Screenshot 2024-03-11 100541](https://github.com/SaurabhS120/news_flutter/assets/70626113/3e4f13f9-8e29-4b66-a474-746eae5e224c)
+<img src="https://github.com/SaurabhS120/news_flutter/assets/70626113/3e4f13f9-8e29-4b66-a474-746eae5e224c" width='300'/>
 
 #### Dart documentation
 We can also generate dart documentations for each layer for our use. Here are the steps mentioned
