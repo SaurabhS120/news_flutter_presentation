@@ -58,4 +58,11 @@ dhttpd --path ./doc/api
 <img src="https://github.com/SaurabhS120/news_flutter_presentation/assets/70626113/96a084c7-55ad-4b5f-9eec-a7902d5948f0" height=500/>
 <img src="https://github.com/SaurabhS120/news_flutter_presentation/assets/70626113/dea4be3d-691c-4d58-8b38-7117d8f8effc" height=500/>
 
+## Download app:
+Click on the following link to download the app from Microsoft App Center <br/>
+https://install.appcenter.ms/users/saurabh.sonar120-gmail.com/apps/store-with-flutter/distribution_groups/public
+
+## CI/CD
+The app build is created by using GitHub action. We are using Microsoft App Center CLI tool to deploy app our app.
+
 
